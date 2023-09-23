@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/tasks",
+					"raw": "http://localhost:3000/api/tasks?page=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -20,6 +20,12 @@
 					"path": [
 						"api",
 						"tasks"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},

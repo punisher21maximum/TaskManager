@@ -42,16 +42,31 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-// Get all tasks
+// Get all tasks with pagination
 exports.getAllTasks = async (req, res) => {
-  try {
-    const tasks = await Task.findAll();
-    return res.json(tasks);
-  } catch (error) {
-    console.error("Error fetching tasks:", error);
-    res.status(500).json({ error: "Failed to fetch tasks." });
-  }
-};
+    try {
+      const page = req.query.page || 1; // Get the page number from the query parameters (default to 1)
+      const limit = 10; // Number of records per page
+  
+      const offset = (page - 1) * limit; // Calculate the offset based on the page number
+  
+      const tasks = await Task.findAndCountAll({
+        limit, // Number of records to return
+        offset, // Offset to skip records
+      });
+  
+      const totalPages = Math.ceil(tasks.count / limit); // Calculate the total number of pages
+  
+      return res.json({
+        tasks: tasks.rows,
+        currentPage: page,
+        totalPages,
+      });
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+      res.status(500).json({ error: "Failed to fetch tasks." });
+    }
+  };  
 
 // Get metrics
 exports.getMetrics = async (req, res) => {
