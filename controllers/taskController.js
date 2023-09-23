@@ -3,7 +3,6 @@ const Task = require("../models/taskModel");
 
 // Create a task
 exports.createTask = async (req, res) => {
-  console.log(req.body);
   try {
     const { title, description, status } = req.body;
     const task = await Task.create({ title, description, status });
@@ -17,7 +16,6 @@ exports.createTask = async (req, res) => {
 // Update a task
 exports.updateTask = async (req, res) => {
   try {
-    console.log("here-->", req.params, req.body);
     const { taskId } = req.params; // Extract the task ID from the URL parameters
     const { title, description, status } = req.body;
 
